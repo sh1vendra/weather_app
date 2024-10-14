@@ -12,30 +12,34 @@ const Weather = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const search = (evt) => {
-    if (evt.key === "Enter") {
-      if (query.trim() === "") {
-        setError("Please enter a city name");
-        return;
-      }
+  const search = () => {
+    if (query.trim() === "") {
+      setError("Please enter a city name");
+      return;
+    }
+    
+    setIsLoading(true); // Start loading
+    setError(""); // Reset error
+    fetch(`${api.base}weather?q=${query.trim()}&units=metric&APPID=${api.key}`)
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.cod === "404") {
+          setError("City not found");
+        } else {
+          setWeather(result);
+        }
+        setIsLoading(false); // End loading
+        setQuery(""); // Clear input
+      })
+      .catch(() => {
+        setError("Failed to fetch weather data");
+        setIsLoading(false); // End loading
+      });
+  };
 
-      setIsLoading(true);  // Start loading
-      setError("");  // Reset error
-      fetch(`${api.base}weather?q=${query.trim()}&units=metric&APPID=${api.key}`)
-        .then((res) => res.json())
-        .then((result) => {
-          if (result.cod === "404") {
-            setError("City not found");
-          } else {
-            setWeather(result);
-          }
-          setIsLoading(false);  // End loading
-          setQuery("");  // Clear input
-        })
-        .catch(() => {
-          setError("Failed to fetch weather data");
-          setIsLoading(false);  // End loading
-        });
+  const handleKeyPress = (evt) => {
+    if (evt.key === "Enter") {
+      search();
     }
   };
 
@@ -68,8 +72,9 @@ const Weather = () => {
             placeholder="Search..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            onKeyPress={search}
+            onKeyPress={handleKeyPress}
           />
+          <button className="search-button" onClick={search}>Search</button>
         </div>
 
         {isLoading && <div className="loading">Loading...</div>}

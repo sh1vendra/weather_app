@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './Weather.css';
 
 const api = {
   key: "5e8c667fb3e19bde98e6fc191e45aa39",
@@ -52,7 +53,8 @@ const Weather = () => {
           />
         </div>
 
-        {weather.main && (
+        {/* Check if weather data exists */}
+        {weather.main ? (
           <div>
             <div className="location-box">
               <div className="location">
@@ -65,6 +67,8 @@ const Weather = () => {
               </div>
             </div>
           </div>
+        ) : (
+          ''
         )}
       </main>
     </div>

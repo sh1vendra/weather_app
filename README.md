@@ -16,6 +16,3 @@ This is a simple weather application built with **React** that allows users to s
 - OpenWeatherMap API
 - HTML/CSS
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).

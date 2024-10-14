@@ -9,14 +9,32 @@ const api = {
 const Weather = () => {
   const [query, setQuery] = useState("");
   const [weather, setWeather] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const search = (evt) => {
     if (evt.key === "Enter") {
-      fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
+      if (query.trim() === "") {
+        setError("Please enter a city name");
+        return;
+      }
+
+      setIsLoading(true);  // Start loading
+      setError("");  // Reset error
+      fetch(`${api.base}weather?q=${query.trim()}&units=metric&APPID=${api.key}`)
         .then((res) => res.json())
         .then((result) => {
-          setWeather(result);
-          setQuery("");
+          if (result.cod === "404") {
+            setError("City not found");
+          } else {
+            setWeather(result);
+          }
+          setIsLoading(false);  // End loading
+          setQuery("");  // Clear input
+        })
+        .catch(() => {
+          setError("Failed to fetch weather data");
+          setIsLoading(false);  // End loading
         });
     }
   };
@@ -43,7 +61,7 @@ const Weather = () => {
     <div>
       <main>
         <div className="search-box">
-        <p className="search-label">Search for a city</p>
+          <p className="search-label">Search for a city</p>
           <input
             type="text"
             className="search-bar"
@@ -54,7 +72,9 @@ const Weather = () => {
           />
         </div>
 
-        {/* Check if weather data exists */}
+        {isLoading && <div className="loading">Loading...</div>}
+        {error && <div className="error">{error}</div>}
+
         {weather.main ? (
           <div>
             <div className="location-box">

@@ -43,6 +43,7 @@ const Weather = () => {
     <div>
       <main>
         <div className="search-box">
+        <p className="search-label">Search for a city</p>
           <input
             type="text"
             className="search-bar"

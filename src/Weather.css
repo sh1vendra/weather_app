@@ -84,7 +84,7 @@
     text-transform: capitalize;
     margin-top: 10px;
   }
-  
+
   .loading {
     font-size: 18px;
     color: #555;
@@ -94,7 +94,47 @@
     font-size: 18px;
     color: red;
   }
+
+  .search-box {
+    display: flex;
+    flex-direction: column; /* Stack the input and button vertically */
+    align-items: flex-start; /* Align items to the left (or center if you prefer) */
+  }
   
+  .search-bar {
+    width: 100%; /* Ensure the input takes full width */
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    outline: none;
+    font-size: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    margin-bottom: 20px; /* Add space between input and button */
+  }
+  
+  .search-button {
+    padding: 10px 20px; /* Adjust size of button */
+    border: none;
+    margin-left: auto;
+    background-color: #5cb85c;
+    color: white;
+    font-size: 14px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .search-button:hover {
+    background-color: #4cae4c;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .search-button:active {
+    transform: translateY(2px);
+  }
+
   
   @media screen and (max-width: 768px) {
     .main {
